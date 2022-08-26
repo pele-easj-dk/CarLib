@@ -20,5 +20,20 @@ namespace CarLib.model
             return base.ToString() + $", Courses=[{String.Join(",", Courses)}]" ;
         }
 
+
+        public void ValidateCourses()
+        {
+            if (Courses is null || Courses.Count == 0) throw new ArgumentNullException("courses must not be null nor empty");
+
+            if (Courses.Count > 10) throw new ArgumentNullException("courses can not exceed 10 courses");
+
+        }
+
+        public override void Validate()
+        {
+            base.Validate();
+            ValidateCourses();
+        }
+
     }
 }

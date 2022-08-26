@@ -18,5 +18,35 @@ namespace CarLib.model
         }
 
 
+
+
+        public static void ValidateId(int id)
+        {
+            if (id <= 0) throw new ArgumentException("Id must be a positive number");
+
+        }
+
+        public static void ValidateName(String name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Name must not be null nor empty");
+
+            if (name.Length < 3) throw new ArgumentException("name must be at least 3 character long");
+
+        }
+        public static void ValidateAddress(String address)
+        {
+            if (string.IsNullOrWhiteSpace(address)) throw new ArgumentNullException("Address must not be null nor empty");
+
+            if (address.Length < 10) throw new ArgumentException("Address must be at least 10 character long");
+
+        }
+
+        public virtual void Validate()
+        {
+            ValidateId(Id);
+            ValidateName(Name);
+            ValidateAddress(Address);
+        }
+
     }
 }

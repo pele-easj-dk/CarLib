@@ -12,10 +12,12 @@ namespace TestModel
     public class TestTeacher
     {
 
+        private Teacher t = null;
+
         [TestInitialize]
         public void beforeEachTest()
         {
-
+            t = new Teacher() { Id = 1, Name = "123", Address = "1234567890", Courses = new List<string>() };
         }
 
         [TestMethod]
@@ -47,6 +49,7 @@ namespace TestModel
         [DataRow(10)]
         public void TestIdNotOK(int lgt)
         {
+            // arrange
             List<String> list = new List<String>();
 
             for (int i = 0; i < lgt; i++)
@@ -54,7 +57,17 @@ namespace TestModel
                 list.Add("Course" + i);
 
             }
-            TeacherValidator.ValidateCourses(list);
+
+
+
+
+            // act
+            t.Courses = list;
+            t.ValidateCourses();
+
+
+            //assert
+            // if not exception test is passing (green)
         }
 
         [TestMethod]
@@ -66,7 +79,9 @@ namespace TestModel
             t.Address = "1234567890";
             t.Courses.Add("TEK");
 
-            TeacherValidator.Validate(t);
+            t.Validate();
+
+
         }
 
         [TestMethod]
@@ -78,7 +93,7 @@ namespace TestModel
             t.Address = "1234567890";
             t.Courses.Add("TEK");
 
-            Assert.ThrowsException<ArgumentException>(() => TeacherValidator.Validate(t));
+            Assert.ThrowsException<ArgumentException>(() => t.Validate());
         }
 
         [TestMethod]
@@ -90,7 +105,7 @@ namespace TestModel
             t.Address = "1234567890";
             //t.Courses; empty => error
 
-            Assert.ThrowsException<ArgumentNullException>(() => TeacherValidator.Validate(t));
+            Assert.ThrowsException<ArgumentNullException>(() => t.Validate());
         }
 
 
